@@ -97,6 +97,10 @@ func shouldColor(mode ColorMode, w io.Writer) bool {
 		if err != nil {
 			return false
 		}
+
+		// ModeCharDevice marks character devices such as terminals and TTYs.
+		// Auto color only enables ANSI output for those devices, avoiding escape
+		// codes when logs are written to regular files, buffers, or pipes.
 		return info.Mode()&os.ModeCharDevice != 0
 	default:
 		return false
